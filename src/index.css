@@ -1,0 +1,12 @@
+body {
+	margin: 0;
+	font-family: 'Fira Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	background-color: #01101b;
+	color: #d6deeb;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+	margin: 0.5em 0;
+}
