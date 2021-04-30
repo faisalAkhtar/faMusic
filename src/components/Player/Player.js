@@ -1,10 +1,18 @@
 import { useEffect, useRef, useState } from 'react'
+import songslist from '../../songsList.json'
 import PlayerControls from './PlayerControls'
 import PlayerDetails from './PlayerDetails'
 
-export default function Player({ currentSongIndex, nextSongIndex, setCurrentSongIndex, songs }) {
+export default function Player({ setAuthtoken }) {
     const audioEl = useRef(null);
+    const [songs] = useState(songslist);
+    const [currentSongIndex, setCurrentSongIndex] = useState(0);
+    const [nextSongIndex, setnextSongIndex] = useState(currentSongIndex + 1);
     const [isplaying, setIsplaying] = useState(false);
+
+    useEffect(() => {
+        setnextSongIndex((currentSongIndex + 1 > songs.length - 1) ? 0 : currentSongIndex + 1);
+    }, [currentSongIndex, songs.length])
 
     useEffect(() => {
         if (isplaying)
@@ -22,6 +30,7 @@ export default function Player({ currentSongIndex, nextSongIndex, setCurrentSong
 
     return (
         <div className='player'>
+            <button onClick={() => setAuthtoken(null)}>Sign out</button>
             <audio src={songs[currentSongIndex].src} ref={audioEl}></audio>
             <h4>Now Playing</h4>
             <PlayerDetails

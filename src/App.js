@@ -1,24 +1,12 @@
-import { useEffect, useState } from 'react';
-import songslist from './songsList.json'
-import Player from './components/Player';
+import Player from './components/Player/Player'
+import Login from './components/Login/Login'
+import useAuthtoken from './utils/useAuthtoken'
 
 export default function App() {
-	const [songs] = useState(songslist);
-	const [currentSongIndex, setCurrentSongIndex] = useState(0);
-	const [nextSongIndex, setnextSongIndex] = useState(currentSongIndex + 1);
+	const { authtoken, setAuthtoken } = useAuthtoken()
 
-	useEffect(() => {
-		setnextSongIndex((currentSongIndex + 1 > songs.length - 1) ? 0 : currentSongIndex + 1);
- 	}, [currentSongIndex, songs.length])
+	if (!authtoken)
+		return <Login setAuthtoken={setAuthtoken} />
 
-	return (
-		<>
-			<Player
-				currentSongIndex={currentSongIndex}
-				nextSongIndex={nextSongIndex}
-				setCurrentSongIndex={setCurrentSongIndex}
-				songs={songs}
-			/>
-		</>
-	);
+	return <Player setAuthtoken={setAuthtoken} />
 }
