@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { Avatar, Box, Button, CssBaseline, Grid, Link, Paper, TextField, Typography } from '@mui/material'
+import { Avatar, Box, Button, Grid, Link, TextField, Typography } from '@mui/material'
 import PropTypes from 'prop-types'
 
 export default function Login({ setAuthtoken }) {
@@ -45,8 +45,6 @@ export default function Login({ setAuthtoken }) {
 
     return (
         <Grid container component='main' sx={{ height: '100vh' }}>
-            <CssBaseline />
-
             <Grid item xs={false} sm={4} md={7}
                 sx={{
                     backgroundImage: 'url(https://source.unsplash.com/random)',
@@ -57,7 +55,7 @@ export default function Login({ setAuthtoken }) {
                 }}
             />
 
-            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center' }}>
+            <Grid item xs={12} sm={8} md={5} elevation={6} square sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center' }}>
                 <Box sx={{ my: 8, mx: 4, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <Avatar sx={{ m: 1, height: 75, width: 75 }} src='https://avatars.githubusercontent.com/faisalakhtar?size=75' alt='' />
 
