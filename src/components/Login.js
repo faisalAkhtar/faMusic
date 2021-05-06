@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Avatar, Box, Button, Grid, Link, TextField, Typography } from '@mui/material'
 import PropTypes from 'prop-types'
 
@@ -6,6 +6,7 @@ export default function Login({ setAuthtoken }) {
     const [errors, setErrors] = useState({})
     const [email, setEmail] = useState('')
     const [pass, setPass] = useState('')
+    const screenRef = useRef(null)
     const emailRef = useRef(null)
     const passRef = useRef(null)
 
@@ -43,13 +44,24 @@ export default function Login({ setAuthtoken }) {
         alert('Incorrect email/password')
     }
 
+    useEffect(() => {
+        window.addEventListener('resize', () => {
+            if (screenRef.current)
+                screenRef.current.style.height = (window.innerHeight > 450 ? window.innerHeight : 450) + 'px'
+        })
+    }, [])
+
+    const screenHeight = {
+        height: (window.innerHeight > 450 ? window.innerHeight : 450) + 'px'
+    }
+
     return (
-        <Grid container component='main' sx={{ height: '100vh' }}>
+        <Grid ref={screenRef} component='main' sx={screenHeight} container>
             <Grid item xs={false} sm={4} md={7}
                 sx={{
                     backgroundImage: 'url(https://source.unsplash.com/random)',
                     backgroundRepeat: 'no-repeat',
-                    backgroundColor: (t) => t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+                    backgroundColor: (t) => t.palette.grey[900],
                     backgroundSize: 'cover',
                     backgroundPosition: 'center'
                 }}

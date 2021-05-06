@@ -1,11 +1,25 @@
-import useAuthtoken from './utils/useAuthtoken'
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
 import Login from './components/Login'
 import Player from './components/Player'
+import useAuthtoken from './utils/useAuthtoken'
 
 export default function App() {
 	const { authtoken, setAuthtoken } = useAuthtoken()
 	const theme = createTheme({
+		components: {
+			MuiCssBaseline: {
+				styleOverrides: `
+				::-webkit-scrollbar {
+					background: #393E46;
+					width: 6px;
+					height: 6px;
+				}
+				::-webkit-scrollbar-thumb {
+					background: #EEEEEE;
+					border-radius: 6px;
+				}`,
+			},
+		},
 		palette: {
 			mode: 'dark',
 			primary: {

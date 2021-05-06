@@ -1,47 +1,55 @@
 import { useEffect, useRef, useState } from 'react'
-import { Button, Grid, Typography } from '@mui/material'
+import { Button, Grid } from '@mui/material'
 import { Logout } from '@mui/icons-material/'
-import { playerStyles } from '../utils/style'
+import PropTypes from 'prop-types'
+import AlbumCover from './AlbumCover'
+import SongDetails from './SongDetails'
 import PlayerControls from './PlayerControls'
-import PlayerDetails from './PlayerDetails'
+import Playlist from './Playlist'
+import { useMediaQuery } from '../utils/useMediaquery'
+import { playerStyles } from '../utils/style'
 import songslist from '../songsList.json'
 
 export default function Player({ setAuthtoken }) {
     const audioEl = useRef(null)
+    const isSmallScreen = useMediaQuery('(min-width:600px)')
     const [songs] = useState(songslist)
     const [currentSongIndex, setCurrentSongIndex] = useState(0)
-    const [nextSongIndex, setnextSongIndex] = useState(currentSongIndex + 1)
     const [isplaying, setIsplaying] = useState(false)
 
     useEffect(() => {
-        setnextSongIndex((currentSongIndex + 1 > songs.length - 1) ? 0 : currentSongIndex + 1)
-    }, [currentSongIndex, songs.length])
+        document.getElementsByTagName('tr')[currentSongIndex].scrollIntoView()
+    }, [currentSongIndex])
 
     useEffect(() => {
-        audioEl.current.onplaying = null
-        audioEl.current.onplaying = e => {
+        const audioElem = audioEl.current
+        audioElem.onplaying = e => {
             console.log('Playing')
             setIsplaying(true)
         }
 
-        audioEl.current.onpause = null
-        audioEl.current.onpause = e => {
+        audioElem.onpause = e => {
             console.log('Paused')
             setIsplaying(false)
         }
 
-        audioEl.current.onended = null
-        audioEl.current.onended = e => {
+        audioElem.onended = e => {
             console.log('Ended')
             skipSong()
             setTimeout(() => {
-                audioEl.current.play()
+                audioElem.play()
             }, 100)
         }
 
         if (isplaying)
-            audioEl.current.play()
-        else audioEl.current.pause()
+            audioElem.play()
+        else audioElem.pause()
+
+        return () => {
+            audioElem.onplaying = null
+            audioElem.onpause = null
+            audioElem.onended = null
+        }
     })
 
     const skipSong = (forwards = true) => {
@@ -50,28 +58,53 @@ export default function Player({ setAuthtoken }) {
         else setCurrentSongIndex(() => (currentSongIndex - 1 < 0) ? songs.length - 1 : currentSongIndex - 1)
     }
 
+    const dynamicStyles = {
+        info: {
+            width: isSmallScreen ? 'calc(100% - 250px)' : 'calc(100% - 180px)',
+            paddingLeft: isSmallScreen ? 25 : 15,
+        },
+        nextUp: {
+            marginTop: 28,
+            height: window.innerHeight > 500 ? 'calc(' + window.innerHeight + 'px - ' + (isSmallScreen ? '338' : '268') + 'px)' : '',
+            overflow: 'auto',
+            scrollBehavior: 'smooth',
+        }
+    }
+
     return (
-        <Grid container component='main'>
-            <Grid item xs={false} sm={1} md={2} lg={3} />
-            <Grid item xs={12} sm={10} md={8} lg={6} sx={{ position: 'relative', paddingTop: 5 }}>
-                <Button style={playerStyles.signOut} size='small' color='secondary' onClick={() => setAuthtoken(null)} variant='contained'>
-                    <Logout />
-                </Button>
-                <audio src={songs[currentSongIndex].src} ref={audioEl}></audio>
-                <Typography style={playerStyles.nowPlaying} component='h4'>Now Playing</Typography>
-                <PlayerDetails
-                    {...songs[currentSongIndex]}
-                />
-                <PlayerControls
-                    isplaying={isplaying}
-                    setIsplaying={setIsplaying}
-                    skipSong={skipSong}
-                />
-                <Typography style={playerStyles.nextUp}>
-                    <strong>Next up:</strong> {songs[nextSongIndex].title} <em>by</em> {songs[nextSongIndex].artist}
-                </Typography>
+        <Grid component='main' style={playerStyles.banner} container>
+            <Button style={playerStyles.signOut} color='secondary' onClick={() => setAuthtoken(null)} variant='contained'>
+                <Logout fontSize={isSmallScreen ? 'medium' : 'small'} />
+            </Button>
+
+            <audio src={songs[currentSongIndex].src} ref={audioEl}></audio>
+
+            <Grid component='div' container>
+                <Grid item>
+                    <AlbumCover isSmallScreen={isSmallScreen} isplaying={isplaying} {...songs[currentSongIndex]} />
+                </Grid>
+
+                <Grid style={dynamicStyles.info} item>
+                    <SongDetails
+                        isSmallScreen={isSmallScreen}
+                        {...songs[currentSongIndex]}
+                    />
+                    <PlayerControls
+                        isSmallScreen={isSmallScreen}
+                        isplaying={isplaying}
+                        setIsplaying={setIsplaying}
+                        skipSong={skipSong}
+                    />
+                </Grid>
             </Grid>
-            <Grid item xs={false} sm={1} md={2} lg={3} />
+
+            <Grid style={dynamicStyles.nextUp} component='div' container>
+                <Playlist songs={songs} currentSongIndex={currentSongIndex} setCurrentSongIndex={setCurrentSongIndex} />
+            </Grid>
         </Grid>
     )
+}
+
+Player.propTypes = {
+    setAuthtoken: PropTypes.func.isRequired
 }
