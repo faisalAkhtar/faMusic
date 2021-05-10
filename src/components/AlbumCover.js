@@ -1,17 +1,26 @@
-import { Grid } from '@mui/material'
+import { CircularProgress, Grid } from '@mui/material'
 import { albumcoverStyles } from '../utils/style'
 
-export default function AlbumCover({ isSmallScreen, isplaying, cover }) {
+export default function AlbumCover({ isbuffering, isSmallScreen, isplaying, cover }) {
     var dynamicStyles = {
-        backgroundImage: "url(" + cover + "), url(cruella.png)",
-        height: isSmallScreen ? 250 : 180,
-        width: isSmallScreen ? 250 : 180,
+        backgroundImage: "url(" + cover + ")",
+        height: isSmallScreen ? 250 : 175,
+        width: isSmallScreen ? 250 : 175,
         opacity: isplaying ? 1 : 0.5,
     }
 
     return (
-        <Grid component='div' direction='column' alignItems='center' container>
+        <Grid component='div' style={albumcoverStyles.cover} container>
             <Grid style={{ ...dynamicStyles, ...albumcoverStyles.img }} item />
+            {isbuffering ? (
+                <Grid style={albumcoverStyles.loader} item>
+                    <CircularProgress color='secondary' />
+                </Grid>
+            ) : null}
+            {!isplaying ? (
+                <Grid style={albumcoverStyles.loader} item>
+                </Grid>
+            ) : null}
         </Grid>
     )
 }

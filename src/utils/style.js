@@ -1,6 +1,6 @@
 const style = {
     player: {
-        banner: {
+        main: {
             maxWidth: 768,
             alignItems: 'center',
             flexDirection: 'column',
@@ -19,14 +19,34 @@ const style = {
             paddingBottom: 18,
             paddingLeft: 0,
             paddingRight: 0,
+            zIndex: 10,
         },
     },
     albumcover: {
+        cover: {
+            position: 'relative',
+            flexDirection: 'column',
+            alignItems: 'center',
+        },
         img: {
+            backgroundColor: '#393E46',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover',
-            transitionDuration: '0.2s',
+            transitionDuration: 0.2,
+            borderRadius: 4,
+        },
+        loader: {
+            position: 'absolute',
+            left: 0,
+            top: 0,
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: '#393E4680',
+            transitionDuration: 0.5,
         },
     },
     songdetails: {
@@ -41,6 +61,7 @@ const style = {
             width: '100%',
             overflow: 'hidden',
             wordBreak: 'break-word',
+            textAlign: 'center',
         },
         artist: {
             color: '#aaaaaa',
@@ -49,6 +70,7 @@ const style = {
             width: '100%',
             overflow: 'hidden',
             wordBreak: 'break-word',
+            textAlign: 'center',
         },
     },
     playerControls: {
@@ -59,8 +81,6 @@ const style = {
         },
         playBtn: {
             padding: 20,
-            marginLeft: 30,
-            marginRight: 30,
             boxShadow: '4px 4px 10px rgba(0, 0, 0, 0.8), -4px -4px 10px rgba(255, 255, 255, 0.4), inset -4px -4px 10px rgba(0, 0, 0, 0.8), inset 4px 4px 10px rgba(255, 255, 255, 0.4)',
             backgroundColor: '#ffce00',
         },
@@ -78,6 +98,7 @@ const style = {
             cursor: 'pointer',
         },
         icon: {
+            textAlign: 'center',
             width: 40,
             color: 'inherit',
         },

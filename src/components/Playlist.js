@@ -11,10 +11,7 @@ export default function Playlist({ songs, currentSongIndex, setCurrentSongIndex 
                         return (
                             <TableRow key={ind} style={ind === currentSongIndex ? playlistStyles.selectedRow : playlistStyles.row} onClick={() => setCurrentSongIndex(ind)}>
                                 <TableCell style={playlistStyles.icon} scope='row'>
-                                    <PlayArrow />
-                                </TableCell>
-                                <TableCell style={playlistStyles.icon} scope='row'>
-                                    {ind + 1}
+                                    {ind === currentSongIndex ? (<PlayArrow />) : (ind + 1)}
                                 </TableCell>
                                 <TableCell style={playlistStyles.title} scope='row'>{song.title}</TableCell>
                                 <TableCell style={playlistStyles.artists} scope='row'>

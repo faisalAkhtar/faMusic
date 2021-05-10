@@ -8,6 +8,10 @@ export default function PlayerControls({ isSmallScreen, isplaying, setIsplaying,
         controls: {
             height: isSmallScreen ? 80 : 65,
         },
+        playBtn: {
+            marginLeft: isSmallScreen ? 30 : 10,
+            marginRight: isSmallScreen ? 30 : 10,
+        }
     }
 
     return (
@@ -15,7 +19,7 @@ export default function PlayerControls({ isSmallScreen, isplaying, setIsplaying,
             <IconButton style={playerControlsStyles.otherBtns} aria-label='Previous' onClick={() => skipSong(false)}>
                 <SkipPrevious fontSize={isSmallScreen ? 'large' : 'medium'} />
             </IconButton>
-            <IconButton style={playerControlsStyles.playBtn} aria-label={isplaying ? 'Pause' : 'Play'} onClick={() => setIsplaying(!isplaying)}>
+            <IconButton style={{ ...dynamicStyles.playBtn, ...playerControlsStyles.playBtn }} aria-label={isplaying ? 'Pause' : 'Play'} onClick={() => setIsplaying(!isplaying)}>
                 {isplaying ? <Pause fontSize={isSmallScreen ? 'large' : 'medium'} /> : <Play fontSize={isSmallScreen ? 'large' : 'medium'} />}
             </IconButton>
             <IconButton style={playerControlsStyles.otherBtns} aria-label='Next' onClick={() => skipSong()}>

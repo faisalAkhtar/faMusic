@@ -16,39 +16,40 @@ export default function Player({ setAuthtoken }) {
     const [songs] = useState(songslist)
     const [currentSongIndex, setCurrentSongIndex] = useState(0)
     const [isplaying, setIsplaying] = useState(false)
+    const [isbuffering, setIsbuffering] = useState(false)
 
     useEffect(() => {
         document.getElementsByTagName('tr')[currentSongIndex].scrollIntoView()
+        setIsplaying(true)
     }, [currentSongIndex])
+
+    const playFunc = () => { setIsplaying(true) }
+    const pauseFunc = () => { setIsplaying(false) }
+    const endedFunc = () => { skipSong(); setTimeout(() => { audioEl.current.play() }, 100) }
+    const waitingFunc = () => { setIsbuffering(true) }
+    const playingFunc = () => { setIsbuffering(false) }
 
     useEffect(() => {
         const audioElem = audioEl.current
-        audioElem.onplaying = e => {
-            console.log('Playing')
-            setIsplaying(true)
-        }
+        audioElem.addEventListener('play', playFunc)
+        audioElem.addEventListener('pause', pauseFunc)
+        audioElem.addEventListener('ended', endedFunc)
+        audioElem.addEventListener('waiting', waitingFunc)
+        audioElem.addEventListener('playing', playingFunc)
 
-        audioElem.onpause = e => {
-            console.log('Paused')
-            setIsplaying(false)
+        let playPromise = isplaying ? audioElem.play() : audioElem.pause()
+        if (playPromise) {
+            playPromise
+                .then(() => { /* Play/Pause sucessful */ })
+                .catch(e => { /* Play/Pause failed */ })
         }
-
-        audioElem.onended = e => {
-            console.log('Ended')
-            skipSong()
-            setTimeout(() => {
-                audioElem.play()
-            }, 100)
-        }
-
-        if (isplaying)
-            audioElem.play()
-        else audioElem.pause()
 
         return () => {
-            audioElem.onplaying = null
-            audioElem.onpause = null
-            audioElem.onended = null
+            audioElem.removeEventListener('play', playFunc)
+            audioElem.removeEventListener('pause', pauseFunc)
+            audioElem.removeEventListener('ended', endedFunc)
+            audioElem.removeEventListener('waiting', waitingFunc)
+            audioElem.removeEventListener('playing', playingFunc)
         }
     })
 
@@ -60,8 +61,8 @@ export default function Player({ setAuthtoken }) {
 
     const dynamicStyles = {
         info: {
-            width: isSmallScreen ? 'calc(100% - 250px)' : 'calc(100% - 180px)',
-            paddingLeft: isSmallScreen ? 25 : 15,
+            width: isSmallScreen ? 'calc(100% - 250px)' : 'calc(100% - 175px)',
+            paddingLeft: isSmallScreen ? 25 : 10,
         },
         nextUp: {
             marginTop: 28,
@@ -72,16 +73,21 @@ export default function Player({ setAuthtoken }) {
     }
 
     return (
-        <Grid component='main' style={playerStyles.banner} container>
+        <Grid component='main' style={playerStyles.main} container>
             <Button style={playerStyles.signOut} color='secondary' onClick={() => setAuthtoken(null)} variant='contained'>
                 <Logout fontSize={isSmallScreen ? 'medium' : 'small'} />
             </Button>
 
-            <audio src={songs[currentSongIndex].src} ref={audioEl}></audio>
+            <audio src={songs[currentSongIndex].src} ref={audioEl} preload='metadata' />
 
             <Grid component='div' container>
                 <Grid item>
-                    <AlbumCover isSmallScreen={isSmallScreen} isplaying={isplaying} {...songs[currentSongIndex]} />
+                    <AlbumCover
+                        isbuffering={isbuffering}
+                        isSmallScreen={isSmallScreen}
+                        isplaying={isplaying}
+                        {...songs[currentSongIndex]}
+                    />
                 </Grid>
 
                 <Grid style={dynamicStyles.info} item>
