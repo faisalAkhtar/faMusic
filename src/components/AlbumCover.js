@@ -1,3 +1,4 @@
+import { Pause } from '@mui/icons-material'
 import { CircularProgress, Grid } from '@mui/material'
 import { albumcoverStyles } from '../utils/style'
 
@@ -12,13 +13,16 @@ export default function AlbumCover({ isbuffering, isSmallScreen, isplaying, cove
     return (
         <Grid component='div' style={albumcoverStyles.cover} container>
             <Grid style={{ ...dynamicStyles, ...albumcoverStyles.img }} item />
+
             {isbuffering ? (
                 <Grid style={albumcoverStyles.loader} item>
                     <CircularProgress color='secondary' />
                 </Grid>
             ) : null}
+
             {!isplaying ? (
                 <Grid style={albumcoverStyles.loader} item>
+                    <Pause color='secondary' />
                 </Grid>
             ) : null}
         </Grid>

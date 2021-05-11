@@ -59,7 +59,7 @@ export default function Login({ setAuthtoken }) {
         <Grid ref={screenRef} component='main' sx={screenHeight} container>
             <Grid item xs={false} sm={4} md={7}
                 sx={{
-                    backgroundImage: 'url(https://source.unsplash.com/random)',
+                    backgroundImage: 'url(https://source.unsplash.com/collection/2467963)',
                     backgroundRepeat: 'no-repeat',
                     backgroundColor: (t) => t.palette.grey[900],
                     backgroundSize: 'cover',

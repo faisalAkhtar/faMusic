@@ -17,6 +17,9 @@ export default function App() {
 				::-webkit-scrollbar-thumb {
 					background: #EEEEEE;
 					border-radius: 6px;
+				}
+				.MuiPaper-root {
+					background-color: #222831 !important;
 				}`,
 			},
 		},

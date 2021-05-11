@@ -1,12 +1,18 @@
 const style = {
     player: {
+        nav: {
+            justifyContent: 'space-between',
+        },
         main: {
             maxWidth: 768,
-            alignItems: 'center',
             flexDirection: 'column',
             position: 'relative',
-            paddingTop: 60,
+            paddingTop: 25,
             margin: '0 auto',
+            boxShadow: 'rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px',
+        },
+        playlist: {
+            maxWidth: 'calc(100% - 75px)',
         },
         signOut: {
             position: 'absolute',
@@ -19,7 +25,6 @@ const style = {
             paddingBottom: 18,
             paddingLeft: 0,
             paddingRight: 0,
-            zIndex: 10,
         },
     },
     albumcover: {
