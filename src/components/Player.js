@@ -8,12 +8,12 @@ import PlayerControls from './PlayerControls'
 import Playlist from './Playlist'
 import { useMediaQuery } from '../utils/useMediaquery'
 import { playerStyles } from '../utils/style'
-import songslist from '../songsList.json'
+import playlistsArray from '../playlists.json'
 
 export default function Player({ setAuthtoken }) {
     const audioEl = useRef(null)
     const isSmallScreen = useMediaQuery('(min-width:600px)')
-    const [playlists] = useState(songslist)
+    const [playlists] = useState(playlistsArray)
     const [selectedPlaylist, setSelectedPlaylist] = useState(0)
     const [songs, setSongs] = useState(playlists[0].songs)
     const [currentSongIndex, setCurrentSongIndex] = useState(0)
@@ -91,8 +91,8 @@ export default function Player({ setAuthtoken }) {
             paddingLeft: isSmallScreen ? 25 : 10,
         },
         nextUp: {
-            marginTop: 28,
-            height: window.innerHeight > 500 ? 'calc(' + window.innerHeight + 'px - ' + (isSmallScreen ? '343' : '273') + 'px)' : '',
+            marginTop: 10,
+            height: window.innerHeight > 500 ? 'calc(' + window.innerHeight + 'px - ' + (isSmallScreen ? '325' : '255') + 'px)' : '',
             overflow: 'auto',
             scrollBehavior: 'smooth',
         }
@@ -144,7 +144,7 @@ export default function Player({ setAuthtoken }) {
                     </Button>
                 </Grid>
 
-                <Grid component='div' container>
+                <Grid component='div' style={playerStyles.banner} container>
                     <Grid item>
                         <AlbumCover
                             isbuffering={isbuffering}

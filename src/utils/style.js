@@ -14,6 +14,9 @@ const style = {
         playlist: {
             maxWidth: 'calc(100% - 75px)',
         },
+        banner: {
+            boxShadow: '0px 20px 25px -5px rgb(0 0 0 / 10%), 0px -10px 10px -5px rgb(0 0 0 / 10%)',
+        },
         signOut: {
             position: 'absolute',
             right: 8,
