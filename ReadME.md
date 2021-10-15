@@ -11,18 +11,44 @@ A web based music player, which is a  browser-native single page application (SP
 
 ### Key Features
 
-| SNo | |
-|--|--|
-| 1. | An elegant login page with a different picture on the left everytime page reloads |
-| 2. | A beautiful audio player with very subtle detailing and great UX |
-| 3. | Supports multiple playlists which can be chosen from the button above |
-| 4. | Native audio player in desktop browser's media tab and mobile browser's notifiaction bar |
-| 5. | Great UX includes showing various states the audio player is in, to the user |
-| 6. | Cross browser and screen-sizes functional<br>1.Phone<br>2. iPad<br>3. MacBook |
+
+<table>
+    <tr>
+        <td>An elegant login page with a different picture on the left everytime page reloads</td>
+        <td><img alt='' src='assets/login.png' width='500' /></td>
+    </tr>
+    <tr>
+        <td>A beautiful audio player with very subtle detailing and great UX</td>
+        <td><img alt='' src='assets/player.png' width='500' /></td>
+    </tr>
+    <tr>
+        <td>Supports multiple playlists which can be chosen from the button above</td>
+        <td><img alt='' src='assets/playlists.png' /></td>
+    </tr>
+    <tr>
+        <td>Native audio player in desktop browser's media tab and mobile browser's notifiaction bar</td>
+        <td><img alt='' src='assets/chrome-mediatab.png' /></td>
+    </tr>
+    <tr>
+        <td>Great UX includes showing various states the audio player is in, to the user</td>
+        <td>
+            <img alt='' src='assets/loading.gif' width='500' />
+            <img alt='' src='assets/paused.png' width='500' />
+        </td>
+    </tr>
+    <tr>
+        <td>Cross browser and screen-sizes functional<br><br>1.Phone<br>2. iPad<br>3. MacBook</td>
+        <td>
+            <img alt='' src='assets/phone.png' width='300' />
+            <img alt='' src='assets/ipad.png' width='400' />
+            <img alt='' src='assets/macbook.png' width='500' />
+        </td>
+    </tr>
+</table>
 
 ### Tech Stack
 
-![ReactJS + MaterialUI](https://miro.medium.com/max/1200/1*sm48BgV9XTonX9CYcUE-VA.png)
+![ReactJS + MaterialUI](assets/techstack.png)
 
 ### Acknowledgements
 
